@@ -34,12 +34,12 @@ export default class LastBets extends Component<Props> {
               >
                 <View style={{ flex: 1, paddingHorizontal: 20 }}>
                   <View
-                    style={{ flex: 3, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
+                    style={{ flex: 1, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
                   >
                     <Text style={{ fontSize: 22, color: Colors.title, fontWeight: 'bold' }}>#{item}</Text>
                     <Text style={{ fontSize: 14, color: Colors.title }}>10/10/2010 12:53:00</Text>
                   </View>
-                  <View style={{ flex: 7, justifyContent: 'space-evenly' }}>
+                  <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
                     <Text style={{ fontSize: 16, color: Colors.subTitle }}>Código da aposta #3X21E</Text>
                     <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: Quadra do Bairro Candeias</Text>
                   </View>
