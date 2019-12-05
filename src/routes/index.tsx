@@ -11,6 +11,7 @@ import CodesPunter from 'screens/Punter/Codes';
 import LastBetsPunter from 'screens/Punter/LastBets';
 import RoundsPunter from 'screens/Punter/Rounds';
 import GamesPunter from 'screens/Punter/Games';
+import BetsPunter from 'screens/Punter/Bets';
 
 const AuthStack = createStackNavigator(
   {
@@ -42,6 +43,7 @@ const RoundsPunterStack = createStackNavigator(
       },
     },
     GamesPunter,
+    BetsPunter,
   },
   {
     headerLayoutPreset: 'center',
@@ -81,7 +83,7 @@ const PunterStack = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Rounds',
+    initialRouteName: 'LastBetsPunter',
     activeColor: Colors.title,
     inactiveColor: 'blue',
     barStyle: { backgroundColor: Colors.primary },
