@@ -3,7 +3,6 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-
 import Colors from 'util/Colors';
 import Login from 'screens/Auth/Login';
 import Register from 'screens/Auth/Register';
@@ -11,6 +10,7 @@ import HomePunter from 'screens/Punter/Home';
 import CodesPunter from 'screens/Punter/Codes';
 import LastBetsPunter from 'screens/Punter/LastBets';
 import RoundsPunter from 'screens/Punter/Rounds';
+import GamesPunter from 'screens/Punter/Games';
 
 const AuthStack = createStackNavigator(
   {
@@ -33,6 +33,22 @@ const AuthStack = createStackNavigator(
   }
 );
 
+const RoundsPunterStack = createStackNavigator(
+  {
+    RoundsPunter: {
+      screen: RoundsPunter,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    GamesPunter,
+  },
+  {
+    headerLayoutPreset: 'center',
+    initialRouteName: 'RoundsPunter',
+  }
+);
+
 const PunterStack = createMaterialBottomTabNavigator(
   {
     HomePunter: {
@@ -49,8 +65,8 @@ const PunterStack = createMaterialBottomTabNavigator(
         title: 'Códigos',
       },
     },
-    RoundsPunter: {
-      screen: RoundsPunter,
+    Rounds: {
+      screen: RoundsPunterStack,
       navigationOptions: {
         tabBarIcon: <MaterialIcons name="turned-in" size={24}></MaterialIcons>,
         title: 'Rodadas',
@@ -65,7 +81,7 @@ const PunterStack = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'RoundsPunter',
+    initialRouteName: 'Rounds',
     activeColor: Colors.title,
     inactiveColor: 'blue',
     barStyle: { backgroundColor: Colors.primary },
