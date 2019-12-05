@@ -43,11 +43,26 @@ const RoundsPunterStack = createStackNavigator(
       },
     },
     GamesPunter,
-    BetsPunter,
   },
   {
     headerLayoutPreset: 'center',
     initialRouteName: 'RoundsPunter',
+  }
+);
+
+const LastBetsPunterStack = createStackNavigator(
+  {
+    LastBetsPunter: {
+      screen: LastBetsPunter,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    BetsPunter,
+  },
+  {
+    headerLayoutPreset: 'center',
+    initialRouteName: 'LastBetsPunter',
   }
 );
 
@@ -75,7 +90,7 @@ const PunterStack = createMaterialBottomTabNavigator(
       },
     },
     LastBetsPunter: {
-      screen: LastBetsPunter,
+      screen: LastBetsPunterStack,
       navigationOptions: {
         tabBarIcon: <MaterialCommunityIcons name="gamepad" size={24}></MaterialCommunityIcons>,
         title: 'Últimas Apostas',

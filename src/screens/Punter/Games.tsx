@@ -22,7 +22,7 @@ export default class LastBets extends Component<Props> {
     bets: [],
     visible: false,
     selectedGame: undefined,
-    checked: 'casa-ganha',
+    type: 'casa-ganha',
     placar: {
       casa: '0',
       visita: '0',
@@ -33,9 +33,32 @@ export default class LastBets extends Component<Props> {
     this.setState({ selectedGame: game, visible: true });
   };
 
+  handleBetting = () => {
+    const { selectedGame, type, placar, bets } = this.state;
+
+    const bet = {
+      game: selectedGame,
+      type,
+      placar,
+    };
+
+    const newBets = [...bets, bet];
+    this.setState({ bets: newBets });
+    this.setState({
+      visible: false,
+      selectedGame: undefined,
+      type: 'casa-ganha',
+      placar: {
+        casa: '0',
+        visita: '0',
+      },
+    });
+  };
+
   render() {
-    const { visible, checked, placar } = this.state;
+    const { visible, type, placar } = this.state;
     const { casa, visita } = placar;
+
     return (
       <View style={{ height: '95%', marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
         <Modal transparent={true} visible={visible} onRequestClose={() => this.setState({ visible: false })}>
@@ -47,9 +70,15 @@ export default class LastBets extends Component<Props> {
           >
             <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.3 }}></View>
           </TouchableWithoutFeedback>
-          <View style={{ flex: 3, backgroundColor: '#FFF', padding: 10, justifyContent: 'space-between' }}>
+          <View style={{ flex: 3, backgroundColor: '#FFF', justifyContent: 'space-between', paddingVertical: 10 }}>
             <View
-              style={{ width: '100%', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}
+              style={{
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                padding: 10,
+              }}
             >
               <Text style={{ color: Colors.title, fontSize: 32, textAlign: 'center' }}>Escolha o resultado</Text>
               <TouchableOpacity
@@ -60,14 +89,14 @@ export default class LastBets extends Component<Props> {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
               onPress={() => {
-                this.setState({ checked: 'casa-ganha' });
+                this.setState({ type: 'casa-ganha' });
               }}
             >
               <RadioButton
                 value="casa-ganha"
-                status={checked === 'casa-ganha' ? 'checked' : 'unchecked'}
+                status={type === 'casa-ganha' ? 'checked' : 'unchecked'}
                 onPress={() => {
                   this.setState({ checked: 'casa-ganha' });
                 }}
@@ -75,52 +104,52 @@ export default class LastBets extends Component<Props> {
               <Text style={{ color: Colors.title, fontSize: 16 }}>Casa ganha</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
               onPress={() => {
-                this.setState({ checked: 'visitante-ganha' });
+                this.setState({ type: 'visitante-ganha' });
               }}
             >
               <RadioButton
                 value="visitante-ganha"
-                status={checked === 'visitante-ganha' ? 'checked' : 'unchecked'}
+                status={type === 'visitante-ganha' ? 'checked' : 'unchecked'}
                 onPress={() => {
-                  this.setState({ checked: 'visitante-ganha' });
+                  this.setState({ type: 'visitante-ganha' });
                 }}
               />
               <Text style={{ color: Colors.title, fontSize: 16 }}>Visitante Ganha</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
               onPress={() => {
-                this.setState({ checked: 'empate' });
+                this.setState({ type: 'empate' });
               }}
             >
               <RadioButton
                 value="empate"
-                status={checked === 'empate' ? 'checked' : 'unchecked'}
+                status={type === 'empate' ? 'checked' : 'unchecked'}
                 onPress={() => {
-                  this.setState({ checked: 'empate' });
+                  this.setState({ type: 'empate' });
                 }}
               />
               <Text style={{ color: Colors.title, fontSize: 16 }}>Empate</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
               onPress={() => {
-                this.setState({ checked: 'placar' });
+                this.setState({ type: 'placar' });
               }}
             >
               <RadioButton
                 value="placar"
-                status={checked === 'placar' ? 'checked' : 'unchecked'}
+                status={type === 'placar' ? 'checked' : 'unchecked'}
                 onPress={() => {
-                  this.setState({ checked: 'placar' });
+                  this.setState({ type: 'placar' });
                 }}
               />
               <Text style={{ color: Colors.title, fontSize: 16 }}>Definir placar</Text>
             </TouchableOpacity>
 
-            {checked === 'placar' ? (
+            {type === 'placar' ? (
               <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
                 <View style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}>
                   <Input
@@ -166,7 +195,7 @@ export default class LastBets extends Component<Props> {
               undefined
             )}
             <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-              <Button onPress={() => this.setState({ visible: false })} title={'APOSTAR'}></Button>
+              <Button onPress={() => this.handleBetting()} title={'APOSTAR'}></Button>
             </View>
           </View>
         </Modal>
