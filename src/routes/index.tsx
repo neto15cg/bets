@@ -83,7 +83,7 @@ const PunterStack = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'LastBetsPunter',
+    initialRouteName: 'CodesPunter',
     activeColor: Colors.title,
     inactiveColor: 'blue',
     barStyle: { backgroundColor: Colors.primary },
