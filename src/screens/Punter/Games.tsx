@@ -48,8 +48,16 @@ export default class LastBets extends Component<Props> {
             <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.3 }}></View>
           </TouchableWithoutFeedback>
           <View style={{ flex: 3, backgroundColor: '#FFF', padding: 10, justifyContent: 'space-between' }}>
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <View
+              style={{ width: '100%', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}
+            >
               <Text style={{ color: Colors.title, fontSize: 32, textAlign: 'center' }}>Escolha o resultado</Text>
+              <TouchableOpacity
+                style={{ alignItems: 'center', justifyContent: 'center', padding: 5 }}
+                onPress={() => this.setState({ visible: false })}
+              >
+                <AntDesign name="close" size={26} />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}
