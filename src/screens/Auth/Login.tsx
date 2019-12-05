@@ -3,8 +3,6 @@ import { View, KeyboardAvoidingView, ScrollView, Text } from 'react-native';
 import Input from 'components/Input/input';
 import Colors from 'util/Colors';
 import Button from 'components/Button';
-// import { Header } from 'react-navigation-stack';
-// import Constants from 'expo-constants';
 
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
 
@@ -15,7 +13,6 @@ export interface Props {
 export default function Login(props: Props) {
   return (
     <KeyboardAvoidingView
-      // keyboardVerticalOffset={Header.HEIGHT + Constants.statusBarHeight + 20}
       behavior="height"
       style={{
         flex: 1,
