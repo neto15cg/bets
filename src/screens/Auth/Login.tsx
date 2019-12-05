@@ -6,7 +6,13 @@ import Button from 'components/Button';
 // import { Header } from 'react-navigation-stack';
 // import Constants from 'expo-constants';
 
-export default function Login() {
+import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
+
+export interface Props {
+  navigation: NavigationScreenProp<NavigationState & NavigationParams>;
+}
+
+export default function Login(props: Props) {
   return (
     <KeyboardAvoidingView
       // keyboardVerticalOffset={Header.HEIGHT + Constants.statusBarHeight + 20}
@@ -26,7 +32,6 @@ export default function Login() {
         <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 64, marginBottom: 30, fontWeight: 'bold', color: Colors.title }}>BIG BET's</Text>
         </View>
-
         <Input
           style={{
             width: '90%',
@@ -56,7 +61,7 @@ export default function Login() {
           <Button onPress={() => console.log('Clicado')} title={'ENTRAR'}></Button>
           <Button
             style={{ backgroundColor: Colors.backgroundThirty }}
-            onPress={() => console.log('Clicado')}
+            onPress={() => props.navigation.navigate('Register')}
             title={'CADASTRAR'}
           ></Button>
         </View>
