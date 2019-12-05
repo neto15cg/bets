@@ -67,7 +67,7 @@ const PunterStack = createMaterialBottomTabNavigator(
         title: 'Códigos',
       },
     },
-    Rounds: {
+    RoundsPunter: {
       screen: RoundsPunterStack,
       navigationOptions: {
         tabBarIcon: <MaterialIcons name="turned-in" size={24}></MaterialIcons>,
@@ -83,7 +83,7 @@ const PunterStack = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'HomePunter',
+    initialRouteName: 'RoundsPunter',
     activeColor: Colors.title,
     inactiveColor: 'blue',
     barStyle: { backgroundColor: Colors.primary },
