@@ -98,7 +98,7 @@ const PunterStack = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'RoundsPunter',
+    initialRouteName: 'HomePunter',
     activeColor: Colors.title,
     inactiveColor: 'blue',
     barStyle: { backgroundColor: Colors.primary },
@@ -117,7 +117,7 @@ const AppSwitch = createSwitchNavigator(
     // },
   },
   {
-    initialRouteName: 'PunterStack',
+    initialRouteName: 'AuthStack',
   }
 );
 export default createAppContainer(AppSwitch);

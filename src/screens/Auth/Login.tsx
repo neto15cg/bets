@@ -55,7 +55,7 @@ export default function Login(props: Props) {
           inputType={'password'}
         ></Input>
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-          <Button onPress={() => console.log('Clicado')} title={'ENTRAR'}></Button>
+          <Button onPress={() => props.navigation.navigate('PunterStack')} title={'ENTRAR'}></Button>
           <Button
             style={{ backgroundColor: Colors.backgroundThirty }}
             onPress={() => props.navigation.navigate('Register')}
