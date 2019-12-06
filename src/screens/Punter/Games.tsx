@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
 import { RadioButton } from 'react-native-paper';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import Colors from 'util/Colors';
 import Input from 'components/Input/input';
 import Button from 'components/Button';
@@ -113,7 +113,7 @@ export default class LastBets extends Component<Props> {
   handleRemoveBet = (bet: any) => {
     const { bets, jogos } = this.state;
 
-    const newBets = bets.filter(item => {
+    const newBets = bets.filter((item: any) => {
       return bet.game !== item.game;
     });
 
@@ -133,6 +133,7 @@ export default class LastBets extends Component<Props> {
   render() {
     const { visible, type, placar, jogos, bets } = this.state;
     const { casa, visita } = placar;
+    const { navigation } = this.props;
 
     return (
       <View style={{ height: '95%', marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
@@ -297,6 +298,7 @@ export default class LastBets extends Component<Props> {
               elevation: 2,
               margin: 5,
             }}
+            onPress={() => navigation.goBack()}
           >
             <Text style={{ color: '#fff', fontWeight: 'bold' }}>Finalizar</Text>
           </TouchableOpacity>
