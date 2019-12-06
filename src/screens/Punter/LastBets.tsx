@@ -8,6 +8,19 @@ export interface Props {
 }
 
 export default class LastBets extends Component<Props> {
+  handleGetColor = (status: string) => {
+    switch (status) {
+      case 'em-aberto':
+        return Colors.attention;
+      case 'acertou':
+        return Colors.primary;
+      case 'errou':
+        return Colors.error;
+      default:
+        return Colors.title;
+    }
+  };
+
   render() {
     return (
       <View style={{ height: '95%', marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
@@ -18,13 +31,13 @@ export default class LastBets extends Component<Props> {
           }}
           style={{ flex: 1, width: '100%' }}
         >
-          {[1, 2, 3, 4, 5].map(item => {
+          {rodadas.map(item => {
             return (
               <TouchableOpacity
-                key={item}
+                key={item.codigo}
                 style={{
                   width: '90%',
-                  height: 150,
+                  minHeight: 200,
                   backgroundColor: Colors.backgroundSecundary,
                   borderRadius: 10,
                   elevation: 3,
@@ -36,12 +49,24 @@ export default class LastBets extends Component<Props> {
                   <View
                     style={{ flex: 1, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
                   >
-                    <Text style={{ fontSize: 22, color: Colors.title, fontWeight: 'bold' }}>#{item}</Text>
-                    <Text style={{ fontSize: 14, color: Colors.title }}>10/10/2010 12:53:00</Text>
+                    <Text style={{ fontSize: 20, color: Colors.title, fontWeight: 'bold' }}>
+                      Torneiro do {item.nome}
+                    </Text>
                   </View>
                   <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
-                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Código da aposta #3X21E</Text>
-                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: Quadra do Bairro Candeias</Text>
+                    <Text style={{ fontSize: 16, color: this.handleGetColor(item.status) }}>
+                      Situação: {item.status}
+                    </Text>
+                    {item.status === 'acertou' ? (
+                      <Text style={{ fontSize: 16, color: Colors.subTitle }}>
+                        Valor ganho R${item.valorGanho.toFixed(2)}
+                      </Text>
+                    ) : (
+                      undefined
+                    )}
+                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Código da aposta #{item.codigo}</Text>
+                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: {item.local}</Text>
+                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Data: {item.data}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -52,3 +77,30 @@ export default class LastBets extends Component<Props> {
     );
   }
 }
+
+const rodadas = [
+  {
+    codigo: 'POW90',
+    nome: 'Bairro Conquista 6',
+    local: 'Quadra do Bairro Conquista 6',
+    data: '10/10/2010 12:53:00',
+    valorGanho: 60,
+    status: 'acertou',
+  },
+  {
+    codigo: 'XD12D',
+    nome: 'Bairro Campinhos',
+    local: 'Quadra do Bairro Campinhos',
+    data: '10/10/2010 12:53:00',
+    valorGanho: 0,
+    status: 'em-aberto',
+  },
+  {
+    codigo: 'E23AC',
+    nome: 'Bairro Panorama',
+    local: 'Quadra do Bairro Panorama',
+    data: '10/10/2010 12:53:00',
+    valorGanho: 0,
+    status: 'errou',
+  },
+];

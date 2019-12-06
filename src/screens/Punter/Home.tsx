@@ -24,7 +24,7 @@ export default class Home extends Component<Props> {
           <TouchableOpacity
             style={{
               width: '90%',
-              height: 150,
+              minHeight: 200,
               backgroundColor: Colors.backgroundSecundary,
               borderRadius: 10,
               elevation: 3,
@@ -35,14 +35,19 @@ export default class Home extends Component<Props> {
             onPress={() => this.props.navigation.navigate('GamesPunter')}
           >
             <View style={{ flex: 1, paddingHorizontal: 20 }}>
-              <View style={{ flex: 3, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 22, color: Colors.title, fontWeight: 'bold' }}>#32</Text>
-                <Text style={{ fontSize: 14, color: Colors.title }}>10/10/2010 12:53:00</Text>
+              <View style={{ flex: 4, alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                <Text style={{ fontSize: 20, color: Colors.title, fontWeight: 'bold' }}>Torneiro do </Text>
+                <Text
+                  style={{ fontSize: 20, color: Colors.subTitle, fontWeight: 'bold', flexWrap: 'wrap', width: '70%' }}
+                >
+                  Bairro Jurema
+                </Text>
               </View>
-              <View style={{ flex: 7, justifyContent: 'space-evenly' }}>
+              <View style={{ flex: 6, justifyContent: 'space-evenly' }}>
                 <Text style={{ fontSize: 16, color: Colors.subTitle }}>Quantidade de times: 16</Text>
                 <Text style={{ fontSize: 16, color: Colors.subTitle }}>Quantidade de jogos: 8</Text>
                 <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: Quadra do Bairro Candeias</Text>
+                <Text style={{ fontSize: 16, color: Colors.subTitle }}>Data: 10/10/2010 12:53:00</Text>
               </View>
             </View>
           </TouchableOpacity>

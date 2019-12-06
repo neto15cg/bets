@@ -34,24 +34,32 @@ export default class LastBets extends Component<Props> {
         data: '10/10/2010 12:53:00',
         local: 'Quadra do bairro candeias',
         bet: undefined,
+        casa: 'Santos',
+        visita: 'São Paulo',
       },
       {
         game: 2,
         data: '10/10/2010 12:54:00',
         local: 'Quadra do bairro candeias',
         bet: undefined,
+        casa: 'Internacional',
+        visita: 'Grêmio',
       },
       {
         game: 3,
         data: '10/10/2010 12:55:00',
         local: 'Quadra do bairro candeias',
         bet: undefined,
+        casa: 'Bahia',
+        visita: 'Vitória',
       },
       {
         game: 4,
         data: '10/10/2010 12:55:00',
         local: 'Quadra do bairro candeias',
         bet: undefined,
+        casa: 'Flamengo',
+        visita: 'Vasco',
       },
     ],
   };
@@ -348,6 +356,9 @@ export default class LastBets extends Component<Props> {
                     ) : (
                       undefined
                     )}
+                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>
+                      Times: {item.casa} X {item.visita}
+                    </Text>
                     <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: {item.local}</Text>
                   </View>
                   {item.bet ? (
