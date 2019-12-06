@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
 import { RadioButton } from 'react-native-paper';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import Colors from 'util/Colors';
 import Input from 'components/Input/input';
 import Button from 'components/Button';
@@ -27,6 +27,33 @@ export default class LastBets extends Component<Props> {
       casa: '0',
       visita: '0',
     },
+
+    jogos: [
+      {
+        game: 1,
+        data: '10/10/2010 12:53:00',
+        local: 'Quadra do bairro candeias',
+        bet: undefined,
+      },
+      {
+        game: 2,
+        data: '10/10/2010 12:54:00',
+        local: 'Quadra do bairro candeias',
+        bet: undefined,
+      },
+      {
+        game: 3,
+        data: '10/10/2010 12:55:00',
+        local: 'Quadra do bairro candeias',
+        bet: undefined,
+      },
+      {
+        game: 4,
+        data: '10/10/2010 12:55:00',
+        local: 'Quadra do bairro candeias',
+        bet: undefined,
+      },
+    ],
   };
 
   handleSelectGame = (game: any) => {
@@ -34,16 +61,24 @@ export default class LastBets extends Component<Props> {
   };
 
   handleBetting = () => {
-    const { selectedGame, type, placar, bets } = this.state;
-
+    const { selectedGame, type, placar, bets, jogos } = this.state;
     const bet = {
-      game: selectedGame,
+      ...(selectedGame as any),
       type,
       placar,
     };
 
     const newBets = [...bets, bet];
-    this.setState({ bets: newBets });
+    const newGames = jogos.map(item => {
+      if (bet.game === item.game) {
+        return {
+          ...item,
+          bet: bet,
+        };
+      }
+      return { ...item };
+    });
+
     this.setState({
       visible: false,
       selectedGame: undefined,
@@ -52,11 +87,51 @@ export default class LastBets extends Component<Props> {
         casa: '0',
         visita: '0',
       },
+      jogos: newGames,
+      bets: newBets,
     });
   };
 
+  handleReturnPalpite = (bet: any) => {
+    if (bet) {
+      if (bet.type === 'casa-ganha') {
+        return 'Casa Ganha';
+      }
+      if (bet.type === 'visitante-ganha') {
+        return 'Visitante Ganha';
+      }
+      if (bet.type === 'empate') {
+        return 'Empate';
+      }
+      if (bet.type === 'placar') {
+        return `${'Casa: ' + bet.placar.casa + ' X Visita: ' + bet.placar.visita}`;
+      }
+    }
+    return '';
+  };
+
+  handleRemoveBet = (bet: any) => {
+    const { bets, jogos } = this.state;
+
+    const newBets = bets.filter(item => {
+      return bet.game !== item.game;
+    });
+
+    const newGames = jogos.map(item => {
+      if (bet.game === item.game) {
+        return {
+          ...item,
+          bet: undefined,
+        };
+      }
+      return { ...item };
+    });
+
+    this.setState({ bets: newBets, jogos: newGames });
+  };
+
   render() {
-    const { visible, type, placar } = this.state;
+    const { visible, type, placar, jogos, bets } = this.state;
     const { casa, visita } = placar;
 
     return (
@@ -70,7 +145,14 @@ export default class LastBets extends Component<Props> {
           >
             <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.3 }}></View>
           </TouchableWithoutFeedback>
-          <View style={{ flex: 3, backgroundColor: '#FFF', justifyContent: 'space-between', paddingVertical: 10 }}>
+          <View
+            style={{
+              flex: 3,
+              backgroundColor: '#FFF',
+              justifyContent: 'space-between',
+              paddingVertical: 10,
+            }}
+          >
             <View
               style={{
                 width: '100%',
@@ -165,7 +247,7 @@ export default class LastBets extends Component<Props> {
                     placeholder={'Casa'}
                     inputType={'number'}
                     keyboardType={'number'}
-                    onChange={(text: any) => this.setState({ placar: { ...this.state.placar, casa: text || '0' } })}
+                    onChange={(text: any) => this.setState({ placar: { ...this.state.placar, casa: text } })}
                     value={(casa && casa.toString()) || casa}
                   ></Input>
                 </View>
@@ -186,7 +268,7 @@ export default class LastBets extends Component<Props> {
                     placeholder={'Visita'}
                     inputType={'number'}
                     keyboardType={'number'}
-                    onChange={(text: any) => this.setState({ placar: { ...placar, visita: text || '0' } })}
+                    onChange={(text: any) => this.setState({ placar: { ...placar, visita: text } })}
                     value={(visita && visita.toString()) || visita}
                   ></Input>
                 </View>
@@ -199,6 +281,28 @@ export default class LastBets extends Component<Props> {
             </View>
           </View>
         </Modal>
+        {bets.length > 0 ? (
+          <TouchableOpacity
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+              backgroundColor: Colors.attention,
+              position: 'absolute',
+              bottom: 10,
+              right: 10,
+              zIndex: 99,
+              alignItems: 'center',
+              justifyContent: 'center',
+              elevation: 2,
+              margin: 5,
+            }}
+          >
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Finalizar</Text>
+          </TouchableOpacity>
+        ) : (
+          undefined
+        )}
         <ScrollView
           contentContainerStyle={{
             justifyContent: 'flex-start',
@@ -212,31 +316,57 @@ export default class LastBets extends Component<Props> {
             </Text>
           </View>
 
-          {[1, 2, 3, 4, 5].map(item => {
+          {jogos.map(item => {
             return (
               <TouchableOpacity
-                key={item}
+                key={item.game}
                 style={{
                   width: '90%',
                   height: 150,
-                  backgroundColor: Colors.backgroundSecundary,
+                  backgroundColor: item.bet ? Colors.primary : Colors.backgroundSecundary,
                   borderRadius: 10,
                   elevation: 3,
                   margin: 5,
                 }}
+                disabled={item.bet ? true : false}
                 onPress={() => this.handleSelectGame(item)}
               >
                 <View style={{ flex: 1, paddingHorizontal: 20 }}>
                   <View
-                    style={{ flex: 1, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
+                    style={{ flex: 4, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
                   >
-                    <Text style={{ fontSize: 22, color: Colors.title, fontWeight: 'bold' }}>#{item}</Text>
+                    <Text style={{ fontSize: 22, color: Colors.title, fontWeight: 'bold' }}>#{item.game}</Text>
                     <Text style={{ fontSize: 14, color: Colors.title }}>10/10/2010 12:53:00</Text>
                   </View>
-                  <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
-                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Código da aposta #3X21E</Text>
-                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: Quadra do Bairro Candeias</Text>
+                  <View style={{ flex: 4, justifyContent: 'space-evenly' }}>
+                    {item.bet ? (
+                      <Text style={{ fontSize: 16, color: Colors.subTitle }}>
+                        Palpite: {this.handleReturnPalpite(item.bet)}
+                      </Text>
+                    ) : (
+                      undefined
+                    )}
+                    <Text style={{ fontSize: 16, color: Colors.subTitle }}>Local: {item.local}</Text>
                   </View>
+                  {item.bet ? (
+                    <TouchableOpacity
+                      style={{
+                        flex: 2,
+                        width: '100%',
+                        height: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#d15656',
+                        borderTopLeftRadius: 10,
+                        borderTopRightRadius: 10,
+                      }}
+                      onPress={() => this.handleRemoveBet(item.bet)}
+                    >
+                      <Text style={{ color: '#fff', fontSize: 16 }}>Remover palpite</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    undefined
+                  )}
                 </View>
               </TouchableOpacity>
             );
