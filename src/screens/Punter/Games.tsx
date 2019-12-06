@@ -300,7 +300,7 @@ export default class LastBets extends Component<Props> {
             }}
             onPress={() => navigation.goBack()}
           >
-            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Finalizar</Text>
+            <Text style={{ color: Colors.title, fontWeight: 'bold' }}>Finalizar</Text>
           </TouchableOpacity>
         ) : (
           undefined
